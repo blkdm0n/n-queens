@@ -195,7 +195,7 @@
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       var c, r;
       var i;
-      var n = this.rows().length;
+      var n = this.rows().length - 1;
       var count = 0;
       if(majorDiagonalColumnIndexAtFirstRow < 0){
         r = (majorDiagonalColumnIndexAtFirstRow * -1);
