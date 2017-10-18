@@ -142,11 +142,47 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var c, r;
+      var i;
+      var count = 0;
+      if(majorDiagonalColumnIndexAtFirstRow < 0){
+        r = (majorDiagonalColumnIndexAtFirstRow * -1);
+        c = 0;
+        i = r;
+      } else if (majorDiagonalColumnIndexAtFirstRow > 0){
+        c = majorDiagonalColumnIndexAtFirstRow;
+        r = 0;
+        i = c;
+      } else{
+        r = 0;
+        c = 0;
+        i = 0;
+      }
+      var row = this.rows();
+      for(i; i < this.rows().length; i++) {
+        if(row[r][c] === 1){
+          count++;
+          if(count > 1) {
+            return true;
+          }
+        }
+        c++;
+        r++;
+      }
+
+
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      var x = this.rows().length;
+      i = (x-1)*-1;
+      for(i; i < x; i++){
+        if(this.hasMajorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -157,6 +193,35 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var c, r;
+      var i;
+      var n = this.rows().length;
+      var count = 0;
+      if(majorDiagonalColumnIndexAtFirstRow < 0){
+        r = (majorDiagonalColumnIndexAtFirstRow * -1);
+        c = 0;
+        i = r;
+      } else if (majorDiagonalColumnIndexAtFirstRow > 0){
+        c = majorDiagonalColumnIndexAtFirstRow;
+        r = 0;
+        i = c;
+      } else{
+        r = 0;
+        c = 0;
+        i = 0;
+      }
+      var row = this.rows();
+      for(i; i < this.rows().length; i++) {
+        if(row[r][c] === 1){
+          count++;
+          if(count > 1) {
+            console.log("fdfsd");
+            return true;
+          }
+        }
+        c++;
+        r++;
+      }
       return false; // fixme
     },
 
