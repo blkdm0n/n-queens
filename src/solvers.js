@@ -39,32 +39,28 @@ window.countNRooksSolutions = function(n) {
   }
   var x = true;
   var board = new Board({n:n});
-  var tree = function (numR, matrix,bool) {
+  var tree = function (numR, br,i) {
     //console.log(numR);
-    if(numR === 0){
+    if(i > n){
+    } else if(numR === 0){
       solutionCount++;
 
     } else {
-      var br = new Board(matrix);
-
-      for (var i = 0; i < n; i++){
-        for(var j = 0; j <n; j++){
-          if(br.attributes[i][j] !== 1){
+      for(var j = 0; j < n; j++){
+          br.togglePiece(i,j);
+          if(br.hasAnyRooksConflicts()){
             br.togglePiece(i,j);
-            console.log(br.rows());
-            if(br.hasAnyRooksConflicts()){
-              br.togglePiece(i,j);
-            } else{
-              tree(numR-1,br.rows(),false);
-              br.togglePiece(i,j);
-            }
+          } else{
+            tree(numR-1,br,i+1);
+            br.togglePiece(i,j);
           }
-        }
+        
       }
+      
     }
   };
 
-  tree(n,board.rows(),x);
+  tree(n,board,0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
@@ -72,6 +68,44 @@ window.countNRooksSolutions = function(n) {
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
   var solution = undefined; //fixme
+  if(n === 0) {
+    return [0];
+  }
+  if(n === 1) {
+    return [1];
+  }
+  var bool = false;
+  var x = true;
+  var board = new Board({n:n});
+  var tree = function (numR, matrix,i,bool) {
+    //console.log(numR);
+    if(bool){
+    } else if(i > n){
+    } else if(numR === 0){
+      console.log(matrix)
+      solution=matrix;
+      bool =true;
+    } else {
+      var br = new Board(matrix);
+      for(var j = 0; j <n; j++){
+        if(bool){
+ 
+        }
+        if(br.attributes[i][j] !== 1){
+          br.togglePiece(i,j);
+          if(br.hasAnyQueenConflictsOn()){
+            br.togglePiece(i,j);
+          } else{
+            tree(numR-1,br.rows(),i+1);
+            br.togglePiece(i,j);
+          }
+        }
+      }
+      
+    }
+  };
+
+  tree(n,board.rows(),0,bool);
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
