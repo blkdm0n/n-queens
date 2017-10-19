@@ -250,7 +250,6 @@
     hasAnyMinorDiagonalConflicts: function() {
       var i = 0;
       var x = (this.rows().length * 2) - 1;
-      console.log(i);
       for(i; i < x; i++){
         if(this.hasMinorDiagonalConflictAt(i)){
           return true;
