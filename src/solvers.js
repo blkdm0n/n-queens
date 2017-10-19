@@ -37,30 +37,37 @@ window.countNRooksSolutions = function(n) {
   if(n === 1) {
     return 1;
   }
-  var x = true;
+  var col = {};
+  for(var g = 0; g < n; g++){
+    col[g] = 0;
+  } 
+  console.log(col);
   var board = new Board({n:n});
-  var tree = function (numR, br,i) {
-    //console.log(numR);
+  var tree = function (numR, br,i,col) {
     if(i > n){
     } else if(numR === 0){
       solutionCount++;
 
     } else {
       for(var j = 0; j < n; j++){
+        if(col[j] === 0){
           br.togglePiece(i,j);
           if(br.hasAnyRooksConflicts()){
             br.togglePiece(i,j);
           } else{
-            tree(numR-1,br,i+1);
+            col[j] = 1;
+            tree(numR-1,br,i+1,col);
             br.togglePiece(i,j);
+            col[j] = 0;
           }
+        }
         
       }
       
     }
   };
 
-  tree(n,board,0);
+  tree(n,board,0,col);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
@@ -80,6 +87,10 @@ window.findNQueensSolution = function(n) {
   if(n===3){
     return [[],[],[]];
   }
+  var col = {};
+  for(var g = 0; g < n; g++){
+    col[g] = 0;
+  } 
   var board = new Board({n:n});
   var tree = function (numR, br,i) {
     //console.log(numR);
@@ -91,13 +102,17 @@ window.findNQueensSolution = function(n) {
 
     } else {
       for(var j = 0; j < n; j++){
+        if(col[j] === 0){
           br.togglePiece(i,j);
           if(br.hasAnyQueensConflicts()){
             br.togglePiece(i,j);
           } else{
-            tree(numR-1,br,i+1);
+            col[j] = 1;
+            tree(numR-1,br,i+1,col);
             br.togglePiece(i,j);
+            col[j] = 0;
           }
+        }
         
       }
       
@@ -125,6 +140,10 @@ window.countNQueensSolutions = function(n) {
   if(n===3){
     return 0;
   }
+  var col = {};
+  for(var g = 0; g < n; g++){
+    col[g] = 0;
+  } 
   var board = new Board({n:n});
   var tree = function (numR, br,i) {
     //console.log(numR);
@@ -133,13 +152,17 @@ window.countNQueensSolutions = function(n) {
       solutionCount++;
     } else {
       for(var j = 0; j < n; j++){
+        if(col[j] === 0){
           br.togglePiece(i,j);
           if(br.hasAnyQueensConflicts()){
             br.togglePiece(i,j);
           } else{
-            tree(numR-1,br,i+1);
+            col[j] = 1;
+            tree(numR-1,br,i+1,col);
             br.togglePiece(i,j);
+            col[j] = 0;
           }
+        }
         
       }
       
